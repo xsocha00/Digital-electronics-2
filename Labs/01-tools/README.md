@@ -1,3 +1,9 @@
+# Lab 1: Jakub Socha
+
+Link to your `Digital-electronics-2` GitHub repository:
+
+   [https://github.com/Digital_electronics-2](https://github.com/Digital_electronics-2)
+
 ### Blink example
 
 1. What is the meaning of the following binary operators in C?
