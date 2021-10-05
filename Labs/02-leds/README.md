@@ -24,7 +24,7 @@ Link to your `Digital-electronics-2` GitHub repository:
 | 0 | 0 | input | no | Tri-state, high-impedance |
 | 0 | 1 | input | yes | MCU. will source current if ext. pulled low |
 | 1 | 0 | output | no | Output low (sink) |
-| 1 | 1 | output | no | output high (source) |
+| 1 | 1 | output | no | Output high (source) |
 
 | **Port** | **Pin** | **Input/output usage?** |
 | :-: | :-: | :-- |
