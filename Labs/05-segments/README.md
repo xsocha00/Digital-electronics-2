@@ -8,8 +8,8 @@ Link to your `Digital-electronics-2` GitHub repository:
 ### 7-segment library
 
 1. In your words, describe the difference between Common Cathode and Common Anode 7-segment display.
-   * CC SSD
-   * CA SSD
+   * CC SSD - all cathodes are connected together, segments are active high
+   * CA SSD - all anodes are connected together, segments are active low
 
 2. Code listing with syntax highlighting of two interrupt service routines (`TIMER0_OVF_vect`, `TIMER0_OVF_vect`) from counter application with at least two digits, ie. values from 00 to 59:
 
@@ -20,8 +20,19 @@ Link to your `Digital-electronics-2` GitHub repository:
  **********************************************************************/
 ISR(TIMER1_OVF_vect)
 {
-    // WRITE YOUR CODE HERE
-
+    static uint8_t counter = 0;
+    static uint8_t counter_tens = 0;
+    if (counter == 9 && counter_tens == 5)
+    {
+       	counter = 0;
+        counter_tens = 0;
+    }
+    if (counter > 9 && counter_tens !=5)
+    {
+        counter = 0;
+        counter_tens++;
+    }
+    counter ++;
 }
 ```
 
@@ -33,8 +44,18 @@ ISR(TIMER1_OVF_vect)
 ISR(TIMER0_OVF_vect)
 {
     static uint8_t pos = 0;
-
-    // WRITE YOUR CODE HERE
+    
+    pos++;
+    if(pos == 0)
+    {
+       	pos = 1;
+       	SEG_update_shift_regs(counter, 0);
+    	}
+    else
+    {
+        pos = 0;
+        SEG_update_shift_regs(counter_tens, 1);
+    }
 
 }
 ```
