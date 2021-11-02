@@ -2,7 +2,7 @@
 
 Link to your `Digital-electronics-2` GitHub repository:
 
-[https://github.com/your-github-account/repository-name/lab_name](https://github.com/xsocha00/Digital-electronics-2/tree/main/Labs/06-lcd)
+[https://github.com/...](https://github.com/xsocha00/Digital-electronics-2/tree/main/Labs/06-lcd)
 
 
 ### LCD display module
