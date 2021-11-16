@@ -18,18 +18,19 @@ Link to this file in your GitHub repository:
    * SPI pins
    * external interrupt pins INT0, INT1
 
-   ![your figure](Images/arduino_uno_pinout.png)
+   ![your figure](https://github.com/xsocha00/Digital-electronics-2/blob/main/Labs/08-i2c/arduino_uno_pinout.png)
 
 ### I2C
 
 1. Code listing of Timer1 overflow interrupt service routine for scanning I2C devices and rendering a clear table on the UART.
 
 ```c
+/* Interrupt service routines ----------------------------------------*/
 /**********************************************************************
  * Function: Timer/Counter1 overflow interrupt
  * Purpose:  Update Finite State Machine and test I2C slave addresses 
  *           between 8 and 119.
- **********************************************************************/
+ **********************************************************************
 ISR(TIMER1_OVF_vect)
 {
     static state_t state = STATE_IDLE;  // Current state of the FSM
@@ -44,7 +45,11 @@ ISR(TIMER1_OVF_vect)
     case STATE_IDLE:
         addr++;
         // If slave address is between 8 and 119 then move to SEND state
-
+        if (addr>=8 && addr <=119) 
+        {    
+            state = STATE_SEND;
+        }        
+            else addr = 7;
         break;
     
     // Transmit I2C slave address and get result
@@ -60,13 +65,18 @@ ISR(TIMER1_OVF_vect)
         twi_stop();
         /* Test result from I2C bus. If it is 0 then move to ACK state, 
          * otherwise move to IDLE */
-
+        if(result == 0) state = STATE_ACK;
+            else state = STATE_IDLE;    
         break;
 
     // A module connected to the bus was found
     case STATE_ACK:
         // Send info about active I2C slave to UART and move to IDLE
-
+        uart_puts("Addr: ");
+        itoa(addr, uart_string, 16);
+        uart_puts(uart_string);
+        uart_puts("\r\n");
+        state = STATE_IDLE;
         break;
 
     // If something unexpected happens then move to IDLE
@@ -87,4 +97,4 @@ Consider an application for temperature and humidity measurement and display. Us
 
 1. FSM state diagram picture of meteo station. The image can be drawn on a computer or by hand. Concise name of individual states and describe the transitions between them.
 
-   ![your figure](https://github.com/xsocha00/Digital-electronics-2/blob/main/Labs/08-i2c/meteo_station.png)
+   ![your figure](https://github.com/xsocha00/Digital-electronics-2/blob/main/Labs/08-i2c/FSM_state_diagram.png)
